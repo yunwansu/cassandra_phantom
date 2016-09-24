@@ -6,19 +6,7 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
 scalaVersion := "2.11.8"
 
-val PhantomVersion = "1.22.0"
-
-resolvers ++= Seq(
-  "Typesafe repository snapshots" at "http://repo.typesafe.com/typesafe/snapshots/",
-  "Typesafe repository releases" at "http://repo.typesafe.com/typesafe/releases/",
-  "Sonatype repo"                    at "https://oss.sonatype.org/content/groups/scala-tools/",
-  "Sonatype releases"                at "https://oss.sonatype.org/content/repositories/releases",
-  "Sonatype snapshots"               at "https://oss.sonatype.org/content/repositories/snapshots",
-  "Sonatype staging"                 at "http://oss.sonatype.org/content/repositories/staging",
-  "Java.net Maven2 Repository"       at "http://download.java.net/maven/2/",
-  "Twitter Repository"               at "http://maven.twttr.com",
-  Resolver.bintrayRepo("websudos", "oss-releases")
-)
+val PhantomVersion = "1.28.14"
 
 libraryDependencies ++= Seq(
   jdbc,
@@ -28,3 +16,10 @@ libraryDependencies ++= Seq(
   "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test
 )
 
+resolvers ++= Seq(
+  Resolver.typesafeRepo("releases"),
+  Resolver.sonatypeRepo("releases"),
+  Resolver.bintrayRepo("websudos", "oss-releases"),
+  Resolver.jcenterRepo,
+  "Twitter Repository" at "http://maven.twttr.com"
+)

@@ -1,9 +1,11 @@
 package controllers
 
 import javax.inject._
+
+import models.AppDatabase
 import play.api._
 import play.api.mvc._
-
+import scala.concurrent.ExecutionContext.Implicits.global
 /**
  * This controller creates an `Action` to handle HTTP requests to the
  * application's home page.
@@ -19,6 +21,12 @@ class HomeController @Inject() extends Controller {
    */
   def index = Action {
     Ok(views.html.index("Your new application is ready."))
+  }
+
+  def beers(style: String) = Action.async {
+    AppDatabase.beers.getByStyle(style).map { beers =>
+      Ok(views.html.beers(style, beers))
+    }
   }
 
 }
