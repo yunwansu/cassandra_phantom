@@ -7,7 +7,8 @@ import play.api._
 import play.api.mvc._
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{Await, Future}
+import scala.concurrent.duration.Duration
 /**
  * This controller creates an `Action` to handle HTTP requests to the
  * application's home page.
@@ -43,6 +44,22 @@ class HomeController @Inject() extends Controller {
     Future{
       AppDatabase.users.creat()
       Ok("")
+    }
+  }
+
+
+  def search_account(Email:String, Passwd:String) = Action.async { implicit request =>
+    Future {
+      val email = request.body.asFormUrlEncoded.get.get("email")
+      val passwd = request.body.asFormUrlEncoded.get.get("passwd")
+      val result = Await.result(AppDatabase.account.getByEmail(Email, Passwd),Duration.Inf).get
+      if(result >= 1){
+        Ok("1")
+      }
+      else{
+        Ok("0")
+      }
+      //Ok(result+""+email.headOption.get.head + ", " + passwd.headOption.get.head)
     }
   }
 }

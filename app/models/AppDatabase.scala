@@ -22,6 +22,9 @@ class AppDatabase(val keyspace: KeySpaceDef) extends Database(keyspace) {
   //  }
   }
   object beers extends ConcreteBeers with keyspace.Connector
+
+  object account extends ConcreteAccounters with keyspace.Connector
+
 }
 
 

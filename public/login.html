@@ -2,9 +2,51 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>
+
+    $(document).ready(function(){
+        $('#passwd').keyup(function(){
+            var len = $('#passwd').val()
+            var text = /\w{1,}/
+
+            if(text.test($('#passwd').val())){
+                if(len.length < 8) {
+                    $('#execute').attr("disabled", true)
+                    $('#pwd').text("비민번호 형식 틀림")
+                }else if(len.length >= 8){
+                    $('#execute').attr("disabled", false)
+                    $('#pwd').text("good!")
+                }
+            }
+        })
+
+        $('#execute').click(function(){
+            var email = $('#email').val()
+            var passwd = $('#passwd').val()
+            $.ajax({
+                type:'POST',
+                url:'../search_account?email='+email+'&passwd='+passwd,
+                dataType:'text',
+                data:{'email':email,'passwd':passwd},
+                success:function(data){
+                    if(data == 1){
+                        alert("login")
+                    }else{
+                        alert("error")
+                    }
+                }
+             })
+        })
+    })
+
+    </script>
 </head>
 <body>
-$END$
+<input type="email" id="email">
+<input type="password" id="passwd">
+<input type="button" id="execute" disabled="true" value="execute" />
+<p id="pwd"></p>
 </body>
 </html>

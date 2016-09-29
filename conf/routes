@@ -11,5 +11,6 @@ GET     /message                    controllers.AsyncController.message
 GET     /beers/:style               controllers.HomeController.beers(style)
 GET      /c                         controllers.HomeController.c()
 GET     /save                       controllers.HomeController.store()
+POST     /search_account            controllers.HomeController.search_account(email, passwd)
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
