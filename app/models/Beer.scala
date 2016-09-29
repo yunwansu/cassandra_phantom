@@ -6,7 +6,7 @@ package models
 import com.websudos.phantom.CassandraTable
 import com.websudos.phantom.dsl._
 
-import scala.concurrent.Future
+import scala.concurrent.{Await, Future}
 
 case class Beer(company: String, name: String, style: String)
 

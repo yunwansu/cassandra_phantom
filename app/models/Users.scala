@@ -9,21 +9,21 @@ import scala.concurrent.Future
 
 
 case class User(
-                 id: UUID,
+                 id: String,
                  email: String,
                  name: String,
                  passwordHash: String,
                  salt: String,
-                 registration: DateTime
+                 registration: String
                )
 
 abstract class Users extends CassandraTable[ConcreteUsers, User] {
-  object id extends UUIDColumn(this) with PartitionKey[UUID]
+  object id extends StringColumn(this) with PartitionKey[String]
   object email extends StringColumn(this)
   object name extends StringColumn(this)
   object passwordHash extends StringColumn(this)
   object salt extends StringColumn(this)
-  object registration extends DateTimeColumn(this)
+  object registration extends StringColumn(this)
 
   def fromRow(row: Row): User = {
     User(
@@ -49,11 +49,16 @@ abstract class ConcreteUsers extends Users with RootConnector {
       .future()
   }
 
-  def getById(id: UUID): Future[Option[User]] = {
-    select.where(_.id eqs id).one()
+  def creat(): Future[ResultSet] = {
+    create
+      .ifNotExists
+      .future()
   }
+  //def getById(id: UUID): Future[Option[User]] = {
+    //select.where(_.id === id).one()
+  //}
 
-  def deleteById(id: UUID): Future[ResultSet] = {
-    delete.where(_.id eqs id).future()
-  }
+  //def deleteById(id: UUID): Future[ResultSet] = {
+    //delete.where(_.id eqs id).future()
+  //}
 }

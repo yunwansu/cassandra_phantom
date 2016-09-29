@@ -2,10 +2,12 @@ package controllers
 
 import javax.inject._
 
-import models.AppDatabase
+import models.{AppDatabase, User}
 import play.api._
 import play.api.mvc._
+
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 /**
  * This controller creates an `Action` to handle HTTP requests to the
  * application's home page.
@@ -29,4 +31,18 @@ class HomeController @Inject() extends Controller {
     }
   }
 
+  val user = new User("32", "2", "3", "4", "5", "3")
+  def store() = Action.async{
+    Future {
+      AppDatabase.users.store(user)
+      Ok("")
+    }
+  }
+
+  def c() = Action.async{
+    Future{
+      AppDatabase.users.creat()
+      Ok("")
+    }
+  }
 }
