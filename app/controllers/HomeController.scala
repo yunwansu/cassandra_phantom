@@ -54,7 +54,8 @@ class HomeController @Inject() extends Controller {
       val passwd = request.body.asFormUrlEncoded.get.get("passwd")
       val result = Await.result(AppDatabase.account.getByEmail(Email, Passwd),Duration.Inf).get
       if(result >= 1){
-        Ok("1")
+        print(email.headOption.get.head)
+        Ok("1").withSession("email"->email.headOption.get.head.toString())
       }
       else{
         Ok("0")

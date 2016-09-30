@@ -32,7 +32,10 @@
                 data:{'email':email,'passwd':passwd},
                 success:function(data){
                     if(data == 1){
-                        alert("login")
+                        alert("login");
+                        //sessionStorage.setItem("email","ds")
+                        localStorage.getItem("email")
+                        alert(session_s);
                     }else{
                         alert("error")
                     }
